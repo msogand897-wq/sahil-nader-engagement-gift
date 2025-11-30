@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>Display</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: #000;
+        overflow: hidden;
+        font-family: sans-serif;
+    }
+    img {
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        display: block;
+    }
+    .footer-text {
+        position: fixed;
+        bottom: 12px;
+        width: 100%;
+        text-align: center;
+        color: white;
+        font-size: 16px;
+        user-select: none;
+        pointer-events: none;
+        opacity: 0.85;
+    }
+</style>
+
+</head>
+<body>
+
+<!-- موسیقی -->
+<audio id="music" preload="auto">
+    <source src="Mohsen Chavoshi - Gheire Mamoli 128 (UpMusic).mp3" type="audio/mpeg">
+</audio>
+
+<!-- تصویر -->
+<img src="InShot_۲۰۲۵۱۱۳۰_۲۳۳۷۲۴۴۶۹.jpg">
+
+<!-- متن پایین صفحه -->
+<div class="footer-text">چون که این اولین آهنگتون بود</div>
+
+<script>
+// اولین تعامل کاربر، موسیقی را پخش می‌کند
+document.addEventListener("click", playMusicOnce);
+document.addEventListener("touchstart", playMusicOnce);
+
+function playMusicOnce() {
+    const m = document.getElementById("music");
+    m.play().catch(()=>{});
+    document.removeEventListener("click", playMusicOnce);
+    document.removeEventListener("touchstart", playMusicOnce);
+}
+</script>
+
+</body>
+</html>
