@@ -1,62 +1,98 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fa">
 <head>
-<meta charset="UTF-8">
-<title>Display</title>
-
-<style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>اولین آهنگ</title>
+  <style>
     body {
-        margin: 0;
-        padding: 0;
-        background: #000;
-        overflow: hidden;
-        font-family: sans-serif;
+      margin: 0;
+      font-family: "Tahoma", sans-serif;
+      background: linear-gradient(180deg, #0f1724, #1a2235);
+      color: #fff;
+      text-align: center;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
     }
     img {
-        width: 100vw;
-        height: 100vh;
-        object-fit: cover;
-        display: block;
+      max-width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
     }
-    .footer-text {
-        position: fixed;
-        bottom: 12px;
-        width: 100%;
-        text-align: center;
-        color: white;
-        font-size: 16px;
-        user-select: none;
-        pointer-events: none;
-        opacity: 0.85;
+    h1 {
+      margin-top: 20px;
+      font-size: 28px;
+      color: #ff6b6b;
     }
-</style>
-
+    .play-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+    .big-play {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(180deg,#ff7b7b,#ff4b4b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 12px 40px rgba(255,75,75,0.4);
+    }
+    .big-play svg {
+      width: 60px;
+      height: 60px;
+      fill: #fff;
+      transform: translateX(5px);
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <img src="assets/InShot_۲۰۲۵۱۱۳۰_۲۳۳۷۲۴۴۶۹.jpg" alt="عکس ویژه" />
+    <h1>چون اولین آهنگتون بود</h1>
+  </div>
 
-<!-- موسیقی -->
-<audio id="music" preload="auto">
-    <source src="Mohsen Chavoshi - Gheire Mamoli 128 (UpMusic).mp3" type="audio/mpeg">
-</audio>
+  <!-- پخش آهنگ -->
+  <audio id="bgAudio" preload="auto" loop>
+    <source src="assets/Mohsen Chavoshi - Gheire Mamoli 128 (UpMusic).mp3" type="audio/mpeg">
+    مرورگر شما از پخش صوت پشتیبانی نمی‌کند.
+  </audio>
 
-<!-- تصویر -->
-<img src="InShot_۲۰۲۵۱۱۳۰_۲۳۳۷۲۴۴۶۹.jpg">
+  <!-- دکمه بزرگ پخش در صورت بلاک شدن autoplay -->
+  <div id="playOverlay" class="play-overlay">
+    <div class="big-play" id="bigPlayBtn">
+      <svg viewBox="0 0 24 24"><path d="M4 2v20l18-10L4 2z"/></svg>
+    </div>
+  </div>
 
-<!-- متن پایین صفحه -->
-<div class="footer-text">چون که این اولین آهنگتون بود</div>
+  <script>
+    const audio = document.getElementById('bgAudio');
+    const playOverlay = document.getElementById('playOverlay');
+    const bigPlayBtn = document.getElementById('bigPlayBtn');
 
-<script>
-// اولین تعامل کاربر، موسیقی را پخش می‌کند
-document.addEventListener("click", playMusicOnce);
-document.addEventListener("touchstart", playMusicOnce);
+    // تلاش برای پخش خودکار
+    window.addEventListener('load', () => {
+      audio.play().then(() => {
+        playOverlay.style.display = 'none';
+      }).catch(() => {
+        playOverlay.style.display = 'flex';
+      });
+    });
 
-function playMusicOnce() {
-    const m = document.getElementById("music");
-    m.play().catch(()=>{});
-    document.removeEventListener("click", playMusicOnce);
-    document.removeEventListener("touchstart", playMusicOnce);
-}
-</script>
-
+    // اگر autoplay بلاک شد، با کلیک کاربر پخش کن
+    bigPlayBtn.addEventListener('click', () => {
+      audio.play();
+      playOverlay.style.display = 'none';
+    });
+  </script>
 </body>
 </html>
